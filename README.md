@@ -33,7 +33,7 @@ når vi kjører influx
 Vi kan starte influx med følgende docker kommando. Legg merke til av vi overstyrer konfigurasjonsfilen
 
 ```
-docker run --name influxdb \
+docker run -d --name influxdb \
   -p 8083:8083 -p 8086:8086 -p 25826:25826/udp \
   -v $PWD/influxdb:/var/lib/influxdb \
   -v $PWD/influxdb.conf:/etc/influxdb/influxdb.conf:ro \
@@ -43,6 +43,10 @@ docker run --name influxdb \
 
 hvis dere går til http://localhost:8083/ får dere opp et enkelt brukergrensesnitt. 
 
+## Start Spring Boot applikasjonen
+
+* Spring vil levere en del metrics til 
+* Test grensesnittet i applikasjkonen med Postman 
 
 ## Visualisering av Metrics 
 
@@ -53,10 +57,28 @@ docker run -d -p 3000:3000 --name grafana grafana/grafana:6.5.0
 ```
 
 hvis dere går til http://localhost:3000/ får dere opp et enkelt brukergrensesnitt. - I grafana, Konfigurer en datasource og bruk følgende verdi som URL
-```
-http://host.docker.internal:8086
-```
-*Velg database "mydb".* Resten av verdiene kan være uendret.
+
+* Dere må bytte passord første gang dere logger på 
+
+* For å konfigurere Influx DB som e datakilde, velg "data sources" 
+
+![Alt text](img/1.png  "a title")
+
+* Velg deretter Influx DB og fyll ut følgende informasjoj
+
+![Alt text](img/2.png  "a title")
+
+*Velg database "mydb".* 
+* Host må være ```http://host.docker.internal:8086```
+
+Resten av verdiene kan være uendret.
+
+Sjekk at du kan lage et Dashbord og at det er noe data du kan ta utgangspunkt i. Vi rekker ikke dypdykke i 
+grafana i denne labben. Hovedformålet er å bli kjent med Rammeverket Micrometer. 
+
+![Alt text](img/5.png  "a title")
+
+
 
  
 ## Instrumenter Spring Boot applikasjonen din med MicroMeter
@@ -74,7 +96,7 @@ autokonfigurasjon. Micrometer rammeverket kommer som en transitiv avhengighet me
 </dependency>
 ```
 
-Vi kan etter det legge til Metrics i koden vår; 
+Vi kan etter dette legge til Metrics i koden vår; 
 ```java 
 @PostMapping(path = "/tx", consumes = "application/json", produces = "application/json")
     public void addMember(@RequestBody Transaction tx) {
@@ -86,7 +108,9 @@ Vi kan etter det legge til Metrics i koden vår;
 Oppgave;
 
 - Prøv ulike typer metrikker (Distribution summary, Counter, Gauge, Timer etc) - Sjekk dokumentasjonen - 
-
+- Bruk gjerne følgende guide som inspirasjon https://www.baeldung.com/micrometer
+- Referanseimplementasjon; https://micrometer.io/docs/concepts
+- 
 Nyttig informasjon; 
 
 - https://spring.io/blog/2018/03/16/micrometer-spring-boot-2-s-new-application-metrics-collector

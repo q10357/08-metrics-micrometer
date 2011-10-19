@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Metrics;
 import io.micrometer.core.instrument.Timer;
@@ -60,22 +61,13 @@ public class BankAccountController {
 
     @PostMapping(path = "/account", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Account> updateAccount(@RequestBody Account a) {
+
         meterRegistry.counter("update_account").increment();
         meterRegistry.gauge("account_balance", a.getBalance());
         Account account = getOrCreateAccount(a.getId());
         account.setBalance(a.getBalance());
         account.setCurrency(a.getCurrency());
         theBank.put(a.getId(), a);
-        Timer timer = meterRegistry.timer("external_api_simulation");
-        timer.record(() -> {
-            try {
-                // Simulate some external API Call
-                MILLISECONDS.sleep(15);
-            } catch (InterruptedException ignored) {
-            }
-        });
-        // Just record a value straight
-        timer.record(30, MILLISECONDS);
         return new ResponseEntity<>(a, HttpStatus.OK);
     }
 
