@@ -34,7 +34,7 @@ docker run -d --name influxdb \
 
 hvis dere går til http://localhost:8083/ får dere opp et enkelt brukergrensesnitt. 
 
-## Start Spring Boot applikasjonen
+## Start Spring Boot appen
 
 * Spring vil levere en del metrics til 
 * Test grensesnittet i applikasjkonen med Postman 
@@ -44,6 +44,7 @@ hvis dere går til http://localhost:8083/ får dere opp et enkelt brukergrensesn
 * Gå til http://localhost:8083/
 * Bytt "database" til mydb
 * I feltet for spørringer skriv "shoe measurements" for å se om data blir levert.
+* Du kan også prøve å skrive sleect * from .... og navnet på et measurement.
 
 ![Alt text](img/6.png  "a title")
 
