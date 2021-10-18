@@ -3,18 +3,9 @@
 I denne labben skal dere bli kjent med hvordan man instrumenterer en Spring Boot applikasjon med Metrics. Vi skal bruke rammeverket 
 Micrometer som er integrert i Spring Boot - og tidsseriedatabasen influxDB. Vi skal også se hvordan vi kan bruke Grafana for visualisering 
 
-Koden i dette repositoriet eksponerer et undepunkt på http://localhost:8080/tx - som tar i mot en POST med følgende 
-payload.
+Koden i dette repositoriet eksponerer et undepunkt på http://localhost:8080/account - utled fra koden hvordan payload
+og URK struktur er. Lek med APIet via Postman
 
-```json
-
-{
-	"fromAccount": "16231027916",
-	"toAccount": "16231027916",
-	"amount": 545454545,
-	"currency" : "USD"
-}
-```
 Applikasjon er konfigurert for på levere Metrics til lokal InfluxDB.
 
 ## Start influxDB
@@ -48,6 +39,15 @@ hvis dere går til http://localhost:8083/ får dere opp et enkelt brukergrensesn
 * Spring vil levere en del metrics til 
 * Test grensesnittet i applikasjkonen med Postman 
 
+## Sjekk at det kommer data  i influx
+
+* Gå til http://localhost:8083/
+* Bytt "database" til mydb
+* I feltet for spørringer skriv "shoe measurements" for å se om data blir levert.
+
+![Alt text](img/6.png  "a title")
+
+
 ## Visualisering av Metrics 
 
 Start Grafana med docker 
@@ -77,7 +77,6 @@ Sjekk at du kan lage et Dashbord og at det er noe data du kan ta utgangspunkt i.
 grafana i denne labben. Hovedformålet er å bli kjent med Rammeverket Micrometer. 
 
 ![Alt text](img/5.png  "a title")
-
 
 
  
