@@ -7,9 +7,6 @@ import lombok.ToString;
 @Data
 public class Transaction {
 
-    private String toAccount;
-    private String fromAccount;
     private double amount;
-    private String currency;
 
 }
