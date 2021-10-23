@@ -8,11 +8,38 @@ og URK struktur er. Lek med APIet via Postman
 
 Applikasjon er konfigurert for på levere Metrics til lokal InfluxDB.
 
+
+## Konfigurer en datakilde i grafana for cloudwatch logs
+
+
+## Instrumenter Spring Boot applikasjonen din med MicroMeter
+
+Vi må sette inn noen målepunkter i koden så vi får metrics inn i InfluxDB som vi kan 
+visualisere med Grafana.
+
+Dette gjøres ved å legge til de riktige avhengighetene til prosjeketet, og la Spring Boot plukke disse opp med
+autokonfigurasjon. Micrometer rammeverket kommer som en transitiv avhengighet med Spring Boot Actuator. Så, disse to linjene i build.gradle er det som skal til
+
+```xml
+<dependency>
+    <groupId>io.micrometer</groupId>
+    <artifactId>micrometer-registry-influx</artifactId>
+    <version>1.5.5</version>
+</dependency>
+```
+
+Vi kan deretter legge til Metrics i koden vår;
+```java 
+@PostMapping(path = "/tx", consumes = "application/json", produces = "application/json")
+    public void addMember(@RequestBody Transaction tx) {
+        meterRegistry.counter("txcount", "currency", tx.getCurrency()).increment();
+    }
+}
+```
+
 ## Start influxDB
 
-(Kilde https://blog.laputa.io/try-influxdb-and-grafana-by-docker-6b4d50c6a446) 
-
-Vi kan få ut en influxdb konfigurasjonsfil fra container ved å kjøre kommandoen 
+(Kilde https://blog.laputa.io/try-influxdb-and-grafana-by-docker-6b4d50c6a446) -Vi kan få ut en influxdb konfigurasjonsfil fra container ved å kjøre kommandoen 
 
 ```sh
 docker run --rm influxdb:1.0 influxd config > influxdb.conf
@@ -48,8 +75,7 @@ hvis dere går til http://localhost:8083/ får dere opp et enkelt brukergrensesn
 
 ![Alt text](img/6.png  "a title")
 
-
-## Visualisering av Metrics 
+## Visualisering av Metrics med Grafana
 
 Start Grafana med docker 
 
@@ -80,30 +106,6 @@ grafana i denne labben. Hovedformålet er å bli kjent med Rammeverket Micromete
 ![Alt text](img/5.png  "a title")
 
 
- 
-## Instrumenter Spring Boot applikasjonen din med MicroMeter
-
-Det er nå på tide å få noe metrics inn i InfluxDB og visualisere med Grafana. 
-
-I grove trekk kan dette gjøres ved å legge til de riktige avhengighetene til prosjeketet, og la Spring Boot plukke disse opp med 
-autokonfigurasjon. Micrometer rammeverket kommer som en transitiv avhengighet med Spring Boot Actuator. Så, disse to linjene i build.gradle er det som skal til 
-
-```xml
-<dependency>
-    <groupId>io.micrometer</groupId>
-    <artifactId>micrometer-registry-influx</artifactId>
-    <version>1.5.5</version>
-</dependency>
-```
-
-Vi kan etter dette legge til Metrics i koden vår; 
-```java 
-@PostMapping(path = "/tx", consumes = "application/json", produces = "application/json")
-    public void addMember(@RequestBody Transaction tx) {
-        meterRegistry.counter("txcount", "currency", tx.getCurrency()).increment();
-    }
-}
-```
 
 Oppgave;
 
