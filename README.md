@@ -62,20 +62,20 @@ mvn spring-boot:run
 
 ## Instrumenter Spring Boot applikasjonen din med MicroMeter & custom metrics
 
-Vi må sette inn noen målepunkter i koden så vi får metrics inn i InfluxDB som vi senere kan visualisere.
-For eksempel    
+Vi kan finne opp våre egne metrics, og lage metrics også for "business". For eksempel     
+akkumulere hvilke valutaer som er mest populære i tenkt scenario som vist her; (Pseudo-kode) 
 
 ```java 
 @PostMapping(path = "/tx", consumes = "application/json", produces = "application/json")
     public void addMember(@RequestBody Transaction tx) {
-        meterRegistry.counter("currencycount", , tx.getCurrency()).increment();
+        meterRegistry.counter("currencycount", "CUR", tx.getCurrency()).increment();
     }
 }
 ```
 
 ## Bonusoppgave 
 
-Installer last-test verktøyet K6 på maskinen din og kjør en liten load test mot applikasjonen. Fra ```k&/``` katalogen i dette repositoryet kan du kjøre kommandoen 
+Installer last-test verktøyet K6 på maskinen din og kjør en liten load test mot applikasjonen. Fra ```k6/``` katalogen i dette repositoryet kan du kjøre kommandoen 
 ```shell
  k6 run --vus 10 --duration 30s --out cloud simpleloadtest.js
 ```

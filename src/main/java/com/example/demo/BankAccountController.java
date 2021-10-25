@@ -46,7 +46,6 @@ public class BankAccountController {
     @PostMapping(path = "/account/{fromAccount}/transfer/{toAccount}", consumes = "application/json", produces = "application/json")
     public void transfer(@RequestBody Transaction tx, @PathVariable String fromAccount, @PathVariable String toAccount) {
         meterRegistry.counter("transfer").increment();
-        meterRegistry.summary("from_account", fromAccount).record(tx.getAmount());
         Account from = getOrCreateAccount(fromAccount);
         Account to = getOrCreateAccount(toAccount);
         from.setBalance(from.getBalance().subtract(valueOf(tx.getAmount())));
@@ -62,9 +61,7 @@ public class BankAccountController {
 
     @PostMapping(path = "/account", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Account> updateAccount(@RequestBody Account a) {
-
         meterRegistry.counter("update_account").increment();
-        meterRegistry.gauge("account_balance", a.getBalance());
         Account account = getOrCreateAccount(a.getId());
         account.setBalance(a.getBalance());
         account.setCurrency(a.getCurrency());
@@ -82,6 +79,7 @@ public class BankAccountController {
     public ResponseEntity<Account> balance(@PathVariable String accountId) {
         meterRegistry.counter("balance").increment();
         Account account = ofNullable(theBank.get(accountId)).orElseThrow(AccountNotFoundException::new);
+        meterRegistry.gauge("account_balance", account.getBalance());
         return new ResponseEntity<>(account, HttpStatus.OK);
     }
 
