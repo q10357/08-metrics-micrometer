@@ -17,4 +17,7 @@ public class Account {
     private String id;
     private BigDecimal balance = BigDecimal.valueOf(0);
 
+    public BigDecimal getBalance() {
+        return balance;
+    }
 }

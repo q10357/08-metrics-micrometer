@@ -4,15 +4,6 @@ import { sleep } from 'k6';
 
 const BASE_URI = "http://localhost:8080"
 
-export let options = {
-  ext: {
-    loadimpact: {
-      projectID: 3557024,
-      name: "Basic get Account test"
-    }
-  }
-}
-
 export function setup() {
     makeBankAccount(1111)
 }
