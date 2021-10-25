@@ -75,7 +75,6 @@ For eksempel akkumulere hvilke valutaer som er mest populære i tenkt scenario s
 }
 ```
 
-
 ## Visualisering av Metrics med Grafana
 
 Start Grafana med docker 
@@ -83,6 +82,9 @@ Start Grafana med docker
 ```sh
 docker run -d -p 3000:3000 --name grafana grafana/grafana:6.5.0
 ```
+
+OBS! Det ligger en demo av konfigurasjon og oppsett av en datakilde og dashboard i grafana her;
+https://kristiania.instructure.com/courses/6805/files/folder/demo
 
 hvis dere går til <http://localhost:3000/> får dere opp et enkelt brukergrensesnitt. 
 
@@ -105,8 +107,7 @@ hvis dere går til <http://localhost:3000/> får dere opp et enkelt brukergrense
 Sjekk at du kan lage et Dashbord og at det er noe data du kan ta utgangspunkt i. Vi rekker ikke dypdykke i 
 grafana i denne labben. Hovedformålet er å bli kjent med Rammeverket Micrometer. 
 
-Det ligger en demo av konfigurasjon og oppsett av en datakilde og dashboard i grafana her;
-https://kristiania.instructure.com/courses/6805/files/folder/demo
+
 
 ![Alt text](img/5.png  "a title")
 
