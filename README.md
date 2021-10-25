@@ -62,8 +62,10 @@ mvn spring-boot:run
 
 ## Instrumenter Spring Boot applikasjonen din med MicroMeter & custom metrics
 
-Vi kan finne opp våre egne metrics, og lage metrics også for "business". For eksempel     
-akkumulere hvilke valutaer som er mest populære i tenkt scenario som vist her; (Pseudo-kode) 
+Vi kan "finne opp" våre egne metrics og metadata-  og lage metrics også for businessrelaterte hendelser. 
+For eksempel akkumulere hvilke valutaer som er mest populære i tenkt scenario som vist her; (Pseudo-kode) 
+
+
 
 ```java 
 @PostMapping(path = "/tx", consumes = "application/json", produces = "application/json")
@@ -120,8 +122,6 @@ Installer last-test verktøyet K6 på maskinen din og kjør en liten load test m
 ```shell
  k6 run --vus 10 --duration 30s simpleloadtest.js
 ```
-
-
 
 Nyttig informasjon; 
 
