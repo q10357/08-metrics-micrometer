@@ -24,7 +24,7 @@ import static java.util.Optional.ofNullable;
 import static java.util.concurrent.TimeUnit.*;
 
 @RestController
-public class    BankAccountController {
+public class BankAccountController {
 
     private Map<String, Account> theBank = new HashMap();
 
@@ -46,6 +46,7 @@ public class    BankAccountController {
     @PostMapping(path = "/account/{fromAccount}/transfer/{toAccount}", consumes = "application/json", produces = "application/json")
     public void transfer(@RequestBody Transaction tx, @PathVariable String fromAccount, @PathVariable String toAccount) {
         meterRegistry.counter("transfer").increment();
+        meterRegistry.summary("from_account", fromAccount).record(tx.getAmount());
         Account from = getOrCreateAccount(fromAccount);
         Account to = getOrCreateAccount(toAccount);
         from.setBalance(from.getBalance().subtract(valueOf(tx.getAmount())));
@@ -86,7 +87,9 @@ public class    BankAccountController {
 
     private Account getOrCreateAccount(String accountId) {
         if (theBank.get(accountId) == null) {
-            theBank.put(accountId, new Account());
+            Account a = new Account();
+            a.setId(accountId);
+            theBank.put(accountId, a);
         }
         return theBank.get(accountId);
     }

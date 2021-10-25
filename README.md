@@ -31,7 +31,7 @@ når vi kjører influx
 
 2. Vi kan nå starte influx med følgende docker kommando. Legg merke til av vi overstyrer konfigurasjonsfilen
 ```
-docker run -d --name influxdb \
+docker run --rm -d --name influxdb \
   -p 8083:8083 -p 8086:8086 -p 25826:25826/udp \
   -v $PWD/influxdb:/var/lib/influxdb \
   -v $PWD/influxdb.conf:/etc/influxdb/influxdb.conf:ro \
@@ -42,6 +42,10 @@ docker run -d --name influxdb \
 Hvis dere nå går til http://localhost:8083/ får dere opp et enkelt brukergrensesnitt.
 
 ## Start Spring Boot appen
+
+```
+mvn spring-boot:run
+```
 
 * Spring vil levere en god del metrics til Influx DB, blant annet fra JVM, Spring Boot Actutor, Spring web mm. 
 * Test grensesnittet i applikasjkonen med Postman 
@@ -59,7 +63,7 @@ Hvis dere nå går til http://localhost:8083/ får dere opp et enkelt brukergren
 ## Instrumenter Spring Boot applikasjonen din med MicroMeter & custom metrics
 
 Vi må sette inn noen målepunkter i koden så vi får metrics inn i InfluxDB som vi senere kan visualisere.
-For eksempel
+For eksempel    
 
 ```java 
 @PostMapping(path = "/tx", consumes = "application/json", produces = "application/json")
