@@ -118,7 +118,7 @@ Oppgave;
 
 Installer last-test verktøyet K6 på maskinen din og kjør en liten load test mot applikasjonen. Fra ```k6/``` katalogen i dette repositoryet kan du kjøre kommandoen
 ```shell
- k6 run --vus 10 --duration 30s --out cloud simpleloadtest.js
+ k6 run --vus 10 --duration 30s simpleloadtest.js
 ```
 
 
