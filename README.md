@@ -73,13 +73,7 @@ akkumulere hvilke valutaer som er mest populære i tenkt scenario som vist her; 
 }
 ```
 
-## Bonusoppgave 
 
-Installer last-test verktøyet K6 på maskinen din og kjør en liten load test mot applikasjonen. Fra ```k6/``` katalogen i dette repositoryet kan du kjøre kommandoen 
-```shell
- k6 run --vus 10 --duration 30s --out cloud simpleloadtest.js
-```
-s
 ## Visualisering av Metrics med Grafana
 
 Start Grafana med docker 
@@ -119,7 +113,16 @@ Oppgave;
 - Prøv ulike typer metrikker (Distribution summary, Counter, Gauge, Timer etc) - Sjekk dokumentasjonen - 
 - Bruk gjerne følgende guide som inspirasjon https://www.baeldung.com/micrometer
 - Referanseimplementasjon; https://micrometer.io/docs/concepts
-- 
+
+## Bonusoppgave
+
+Installer last-test verktøyet K6 på maskinen din og kjør en liten load test mot applikasjonen. Fra ```k6/``` katalogen i dette repositoryet kan du kjøre kommandoen
+```shell
+ k6 run --vus 10 --duration 30s --out cloud simpleloadtest.js
+```
+
+
+
 Nyttig informasjon; 
 
 - https://spring.io/blog/2018/03/16/micrometer-spring-boot-2-s-new-application-metrics-collector
