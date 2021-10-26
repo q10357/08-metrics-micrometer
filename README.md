@@ -21,15 +21,11 @@ i prosjektet sin ```pom.xml```
 
 Før du starter Maven applikasjonen må InfluxDB kjøre. Det gjøres på følgende måte.
 
-1. Kopier en influxdb.conf til ditt lokale filsystem
-```sh
-docker run --rm influxdb:1.0 influxd config > influxdb.conf
-```
+Vi kan nå starte influx med følgende docker kommando. Det ligger en default influxdb.conf i dette 
+repoet som du kan endre etter behov. 
 
-Dette kan være greit dersom vi ønsker å endre noe. Vi vil sende filen tilbake til containeren og overskrive med våre verdier
-når vi kjører influx
 
-2. Vi kan nå starte influx med følgende docker kommando. Legg merke til av vi overstyrer konfigurasjonsfilen
+1. Osx
 
 ```
 docker run --rm -d --name influxdb \
@@ -39,10 +35,18 @@ docker run --rm -d --name influxdb \
   -v $PWD/types.db:/usr/share/collectd/types.db:ro \
   influxdb:1.0
 ````
-Windowsbrukere (Takk Kai): 
+
+2. Windowsbrukere (Takk Kai): 
 ```shell
 docker run --rm -d --name influxdb -p 8083:8083 -p 8086:8086 -p 25826:25826/udp -v %cd%/influxdb:/var/lib/influxdb -v %cd%/influxdb.confro -v %cd%/types.dbro influxdb:1.0
 ```
+
+3. Ubuntu (Takk Lars). I Ubuntu kan det være greit å kjøre docker med "host" network mode for at Grafana skal få tilgang til Influx DB. 
+
+```shell
+docker run -d --network="host" -p 3000:3000 --name grafana grafana/grafana:6.5.0
+```
+
 Hvis dere nå går til http://localhost:8083/ får dere opp et enkelt brukergrensesnitt.
 
 ## Start Spring Boot appen
@@ -60,7 +64,7 @@ mvn spring-boot:run
 * Bytt "database" til mydb
 * I feltet for spørringer skriv "show measurements" for å se hva slags data som blir levert.
 * Du kan også prøve å skrive for eksempel ```SELECT * FROM jvm_memory_used WHERE time > now() - 2h``` for å få se data om minnebruk
-* Dokumentasjon på spørrespråket; - https://docs.influxdata.com/influxdb/v1.8/query_language/
+* Dokumentasjon på spørrespråket finner dere her; - https://docs.influxdata.com/influxdb/v1.8/query_language/
 
 ![Alt text](img/6.png  "a title")
 
