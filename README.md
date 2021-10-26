@@ -30,6 +30,7 @@ Dette kan være greit dersom vi ønsker å endre noe. Vi vil sende filen tilbake
 når vi kjører influx
 
 2. Vi kan nå starte influx med følgende docker kommando. Legg merke til av vi overstyrer konfigurasjonsfilen
+
 ```
 docker run --rm -d --name influxdb \
   -p 8083:8083 -p 8086:8086 -p 25826:25826/udp \
@@ -38,7 +39,10 @@ docker run --rm -d --name influxdb \
   -v $PWD/types.db:/usr/share/collectd/types.db:ro \
   influxdb:1.0
 ````
-
+Windowsbrukere (Takk Kai): 
+```shell
+docker run --rm -d --name influxdb -p 8083:8083 -p 8086:8086 -p 25826:25826/udp -v %cd%/influxdb:/var/lib/influxdb -v %cd%/influxdb.confro -v %cd%/types.dbro influxdb:1.0
+```
 Hvis dere nå går til http://localhost:8083/ får dere opp et enkelt brukergrensesnitt.
 
 ## Start Spring Boot appen
