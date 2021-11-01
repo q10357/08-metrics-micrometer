@@ -15,4 +15,3 @@ export default function () {
   const res = http.get('https://test.k6.io');
   sleep(1);
 }
-s''
