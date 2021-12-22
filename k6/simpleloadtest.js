@@ -12,7 +12,7 @@ export default function () {
   const params = {
      headers: { 'Content-Type': 'application/json' }
  }
- http.get(BASE_URI + '/account/1111', params);
+ http.post(BASE_URI + '/account/1111/transfer/2', '{}', params);
  sleep(1);
 }
 
@@ -28,5 +28,5 @@ export function makeBankAccount(accountNumber) {
          'Content-Type': 'application/json',
        },
       };
-      http.post(BASE_URI+'/account', payload, params);
+      http.post(BASE_URI+'/account/1111/transfer/2', payload, params);
 }
