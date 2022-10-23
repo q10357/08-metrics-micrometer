@@ -1,53 +1,12 @@
-# Metrics med Spring Boot, Micrometer, InfluxDB og Grafana 
+# Metrics med Spring Boot, CloudWatch og Grafana
 
 I denne øvingen skal dere bli kjent med hvordan man instrumenterer en Spring Boot applikasjon med Metrics. Vi skal bruke rammeverket 
-Micrometer som er integrert i Spring Boot. Vi skal også se på  tidsseriedatabasen influxDB, og hvordan vi kan bruke Grafana for visualisering 
+Micrometer som er integrert i Spring Boot. 
+
+Vi skal også se på Metrics i AWS CloudWatch, og hvordan vi kan bruke Grafana for visualisering 
 
 Koden i dette repositoriet eksponerer et undepunkt på http://localhost:8080/account - se på koden hvordan payload
 strukturen er definert og HTTP metodene som brukes. Prøv APIet via Postman.
-
-Applikasjonen er allerede konfigurert for å levere metrics til InfluxDB. Fordi denne avhengigheten er definert 
-i prosjektet sin ```pom.xml``` 
-
-```xml
-<dependency>
-    <groupId>io.micrometer</groupId>
-    <artifactId>micrometer-registry-atlas</artifactId>
-    <version>1.7.1</version>
-</dependency>
-```
-
-## Start influxDB
-
-Før du starter Maven applikasjonen må InfluxDB kjøre. Det gjøres på følgende måte.
-
-Vi kan nå starte influx med følgende docker kommando. Det ligger en default influxdb.conf i dette 
-repoet som du kan endre etter behov. 
-
-
-1. Osx
-
-```
-docker run --rm -d --name influxdb \
-  -p 8083:8083 -p 8086:8086 -p 25826:25826/udp \
-  -v $PWD/influxdb:/var/lib/influxdb \
-  -v $PWD/influxdb.conf:/etc/influxdb/influxdb.conf:ro \
-  -v $PWD/types.db:/usr/share/collectd/types.db:ro \
-  influxdb:1.0
-````
-
-2. Windowsbrukere (Takk Kai): 
-```shell
-docker run --rm -d --name influxdb -p 8083:8083 -p 8086:8086 -p 25826:25826/udp -v %cd%/influxdb:/var/lib/influxdb -v %cd%/influxdb.confro -v %cd%/types.dbro influxdb:1.0
-```
-
-3. Ubuntu (Takk Lars). I Ubuntu kan det være greit å kjøre docker med "host" network mode for at Grafana skal få tilgang til Influx DB. 
-
-```shell
-docker run -d --network="host" -p 3000:3000 --name grafana grafana/grafana:6.5.0
-```
-
-Hvis dere nå går til http://localhost:8083/ får dere opp et enkelt brukergrensesnitt.
 
 ## Start Spring Boot appen
 
@@ -55,24 +14,17 @@ Hvis dere nå går til http://localhost:8083/ får dere opp et enkelt brukergren
 mvn spring-boot:run
 ```
 
-* Spring vil levere en god del metrics til Influx DB, blant annet fra JVM, Spring Boot Actutor, Spring web mm. 
-* Test grensesnittet i applikasjkonen med Postman 
+* Spring vil levere en god del metrics til CliudWatch automatisk, blant annet fra JVM, Spring Boot Actutor, Spring web mm. 
+* Test grensesnittet i applikasjkonen med Postman
+* Gå til AWS CloudWatch og gå til "Metrics"
+* Søk på ditt eget studentnavn som NameSpace
 
-## Sjekk at det kommer data i influx
+## Sjekk at det kommer data i CloudWatch
 
-* Gå til http://localhost:8083/
-* Bytt "database" til mydb
-* I feltet for spørringer skriv "show measurements" for å se hva slags data som blir levert.
-* Du kan også prøve å skrive for eksempel ```SELECT * FROM jvm_memory_used WHERE time > now() - 2h``` for å få se data om minnebruk
-* Dokumentasjon på spørrespråket finner dere her; - https://docs.influxdata.com/influxdb/v1.8/query_language/
-
-![Alt text](img/6.png  "a title")
-
-## Instrumenter Spring Boot applikasjonen din med MicroMeter & custom metrics
+## Legg til mer Metrics i  applikasjonen din med MicroMeter 
 
 Vi kan "finne opp" våre egne metrics og metadata-  og lage metrics også for businessrelaterte hendelser. 
 For eksempel akkumulere hvilke valutaer som er mest populære i tenkt scenario som vist her; (Pseudo-kode) 
-
 
 
 ```java 
