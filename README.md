@@ -12,8 +12,8 @@ i prosjektet sin ```pom.xml```
 ```xml
 <dependency>
     <groupId>io.micrometer</groupId>
-    <artifactId>micrometer-registry-influx</artifactId>
-    <version>1.5.5</version>
+    <artifactId>micrometer-registry-atlas</artifactId>
+    <version>1.7.1</version>
 </dependency>
 ```
 

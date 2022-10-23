@@ -15,6 +15,7 @@
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
+		<aws.sdk.version>2.17.292</aws.sdk.version>
 		<java.version>11</java.version>
 	</properties>
 
@@ -28,6 +29,25 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+
+		<dependency>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-registry-cloudwatch2</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>software.amazon.awssdk</groupId>
+			<artifactId>utils</artifactId>
+			<version>${aws.sdk.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>software.amazon.awssdk</groupId>
+			<artifactId>aws-sdk-java</artifactId>
+			<version>${aws.sdk.version}</version>
+			<scope>provided</scope>
+		</dependency>
+
 
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -46,14 +66,10 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/io.micrometer/micrometer-registry-influx -->
 		<dependency>
 			<groupId>io.micrometer</groupId>
-			<artifactId>micrometer-registry-influx</artifactId>
-			<version>1.5.5</version>
+			<artifactId>micrometer-core</artifactId>
 		</dependency>
-
 	</dependencies>
 
 	<build>
