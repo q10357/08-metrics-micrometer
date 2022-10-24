@@ -55,22 +55,22 @@ Du må endre på klassen *MetricsConfig* og bruke ditt egent studentnavn istedet
     };
 ````
 
-Start applikasjonen
+Start applikasjonen fra terminal, eller fra IntelliJ/IDE
 ```
 mvn spring-boot:run
 ```
 
-Spring vil eksponere en god del metrics til CloudWatch automatisk, blant annet fra JVM, Spring web mm. 
+## Sjekk at det kommer data i CloudWatch
+Spring Boot vil eksponere en god del metrics til CloudWatch automatisk, 
+blant annet fra JVM, Spring web mm. 
 
-* Åpne AWS UI , og tjenesten CloudWatch. Velg "Metrics".
+* Åpne AWS UI, og tjenesten CloudWatch. Velg "Metrics".
 * Søk på ditt eget studentnavn som "NameSpace"
-* Du vil se at du allerede har noe metrics
+* Du vil se at du allerede har noe metrics registert hvis du har startet appen riktig 
 
 * fra Spring boot Web under *(exception, method, outcome, status, uri)*
 * RAM og Garbage Collection Metrics under *Area*
 * Tråder under *State*
-
-## Sjekk at det kommer data i CloudWatch
 
 Bruk Postman, Curl eller annen API klient til å gjøre operasjoner mot APIet. Sjekk i CloudWatch 
 at du får data. 
