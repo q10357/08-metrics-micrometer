@@ -1,18 +1,17 @@
 # Metrics med Spring Boot og CloudWatch 
 
 I denne øvingen skal dere bli kjent med hvordan man instrumenterer en Spring Boot applikasjon med Metrics. Vi skal bruke rammeverket 
-Micrometer som er integrert i Spring Boot. Vi skal også se på hvordan vi kan visualisere Metrics i AWS CloudWatch og 
-CloudWatch
+Micrometer som er integrert i Spring Boot. Vi skal også se på hvordan vi kan visualisere Metrics i AWS CloudWatch.
 
 Koden i dette repositoriet eksponerer et undepunkt på http://localhost:8080/account - følgende funksjonalitet 
 er implementert
 
-NB. Transfer-endepunktet krever ikke at det eksisterer en konto fra før- men vil opprette både til- og fra
-konto hvis de ikke eksisterer.
-
 * Lage ny konto POST path = "/account
 * Info om konto GET path = "/account/{accountId}
 * Oveføre penger POST path = "/account/{fromAccount}/transfer/{toAccount}
+
+_ Transfer-endepunktet krever ikke at det eksisterer en konto fra før- men vil opprette både til- og fra
+konto hvis de ikke eksisterer, så det er veldig bra for testing_
 
 Payload for Overføringer , fromCountry og toCountry er valgfritt og default verdi er "NO"
 
@@ -24,13 +23,14 @@ Payload for Overføringer , fromCountry og toCountry er valgfritt og default ver
 }
 ```
 
-## Vi skal gjøre øvingen på egen maskin, ikke ved hjelp av Cloud 9 
+## Vi skal gjøre denne øvingen på egen maskin- ikke i Cloud 9 
 
-* Installer AWS CLI 
-* https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
+Derfor trenger du et IDE for Java , feks IntelliJ og AWS CLI på maskinen din
+
+* Installer AWS CLI  https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
 
 ## Konfigurere AWS CLI
-
+Kjør
 ```sh
 aws configure
 ```
