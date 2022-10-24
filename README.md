@@ -30,11 +30,13 @@ Derfor trenger du et IDE for Java , feks IntelliJ og AWS CLI på maskinen din
 * Installer AWS CLI  https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
 
 ## Konfigurere AWS CLI
+
+Logg inn i AWS kontoen vår som vanlig, finn din bruker og lag AccessKeys til din IAM bruker.
+
 Kjør
 ```sh
 aws configure
 ```
-AccessKeyID og SecretAccessKey blir gitt i klasserommet. 
 
 ## Start Spring Boot appen
 

@@ -53,7 +53,8 @@ public class BankAccountController implements ApplicationListener<ApplicationRea
      * @param a the account Object
      * @return
      */
-    @PostMapping(path = "/account", consumes = "application/json", produces = "application/json")
+    @PostMapping(path = "/account", consumes = "application/json",
+            produces = "application/json")
     public ResponseEntity<Account> updateAccount(@RequestBody Account a) {
         meterRegistry.counter("update_account").increment();
         Account account = getOrCreateAccount(a.getId());
@@ -69,6 +70,7 @@ public class BankAccountController implements ApplicationListener<ApplicationRea
      * @param accountId the account ID to get info from
      * @return
      */
+    @Timed
     @GetMapping(path = "/account/{accountId}", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Account> balance(@PathVariable String accountId) {
         meterRegistry.counter("balance").increment();
@@ -94,7 +96,8 @@ public class BankAccountController implements ApplicationListener<ApplicationRea
      */
     @Override
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
-        Gauge.builder("account_count", theBank, b -> b.values().size()).register(meterRegistry);
+        Gauge.builder("account_count", theBank,
+                b -> b.values().size()).register(meterRegistry);
     }
 
     @ResponseStatus(code = HttpStatus.NOT_FOUND, reason = "account not found")
