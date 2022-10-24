@@ -6,6 +6,7 @@ import io.micrometer.core.instrument.MeterRegistry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.EventListener;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -38,7 +39,9 @@ public class BankAccountController implements ApplicationListener<ApplicationRea
     @Timed
     @PostMapping(path = "/account/{fromAccount}/transfer/{toAccount}", consumes = "application/json", produces = "application/json")
     public void transfer(@RequestBody Transaction tx, @PathVariable String fromAccount, @PathVariable String toAccount) {
-        meterRegistry.counter("transfer").increment();
+        // Increment a metric called "transfer" every time this is called, and tag with from- and to country
+        meterRegistry.counter("transfer",
+                "from", tx.getFromCountry(), "to", tx.getToCountry()).increment();
         Account from = getOrCreateAccount(fromAccount);
         Account to = getOrCreateAccount(toAccount);
         from.setBalance(from.getBalance().subtract(valueOf(tx.getAmount())));
@@ -51,7 +54,6 @@ public class BankAccountController implements ApplicationListener<ApplicationRea
      * @param a the account Object
      * @return
      */
-
     @PostMapping(path = "/account", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Account> updateAccount(@RequestBody Account a) {
         meterRegistry.counter("update_account").increment();
@@ -72,7 +74,6 @@ public class BankAccountController implements ApplicationListener<ApplicationRea
     public ResponseEntity<Account> balance(@PathVariable String accountId) {
         meterRegistry.counter("balance").increment();
         Account account = ofNullable(theBank.get(accountId)).orElseThrow(AccountNotFoundException::new);
-        meterRegistry.gauge("account_balance", account.getBalance());
         return new ResponseEntity<>(account, HttpStatus.OK);
     }
 
@@ -84,6 +85,7 @@ public class BankAccountController implements ApplicationListener<ApplicationRea
         }
         return theBank.get(accountId);
     }
+
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
