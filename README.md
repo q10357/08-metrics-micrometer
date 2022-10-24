@@ -1,4 +1,4 @@
-# Metrics med Spring Boot, CloudWatch og Grafana
+# Metrics med Spring Boot, CloudWatch 
 
 I denne øvingen skal dere bli kjent med hvordan man instrumenterer en Spring Boot applikasjon med Metrics. Vi skal bruke rammeverket 
 Micrometer som er integrert i Spring Boot. Vi skal også se på hvordan vi kan visualisere Metrics i AWS CloudWatch og 
@@ -12,7 +12,7 @@ er implementert
 * Info om konto GET path = "/account/{accountId}
 * Oveføre penger POST path = "/account/{fromAccount}/transfer/{toAccount}
 
-Payload for overføringer , fromCountry og toCountry er valgfrie og default er "NO"
+Payload for Overføringer , fromCountry og toCountry er valgfritt og default verdi er "NO"
 
 ```json
 {
@@ -22,29 +22,60 @@ Payload for overføringer , fromCountry og toCountry er valgfrie og default er "
 }
 ```
 
+## Vi skal gjøre øvingen på egen maskin, ikke ved hjelp av Cloud 9 
+
+* Installer AWS CLI 
+* https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
+
+## Konfigurere AWS CLI
+
+```sh
+aws configure
+```
+AccessKeyID og SecretAccessKey blir gitt i klasserommet. 
 
 ## Start Spring Boot appen
 
+Du må endre på klassen *MetricsConfig* og bruke ditt egent studentnavn istedet for glennbech i kodeblokken 
+
+````java
+ return new CloudWatchConfig() {
+            private Map<String, String> configuration = Map.of(
+                    "cloudwatch.namespace", "glennbech",
+                    "cloudwatch.step", Duration.ofSeconds(5).toString());
+
+            @Override
+            public String get(String key) {
+                return configuration.get(key);
+            }
+        };
+````
+
+Start applikasjonen
 ```
 mvn spring-boot:run
 ```
 
-Spring vil eksponere en god del metrics til CloudWatch automatisk, blant annet fra JVM, Spring Boot Actutor, Spring web mm. 
-Åpne CloudWatch velg "Metrics", Ditt eget NameSpace, og se at du har
-* 
-* metrics fra Spring boot Web under (exception, method, outcome, status, uri)
-* RAM og Garbage Collection Metrics under "Area"
-* Tråder under "State"
+Spring vil eksponere en god del metrics til CloudWatch automatisk, blant annet fra JVM, Spring web mm. 
 
-* Gå til AWS CloudWatch og gå til "Metrics"
-* Søk på ditt eget studentnavn som NameSpace
+* Åpne AWS UI , og tjenesten CloudWatch. Velg "Metrics".
+* Søk på ditt eget studentnavn som "NameSpace"
+* Du vil se at du allerede har noe metrics
+
+* fra Spring boot Web under *(exception, method, outcome, status, uri)*
+* RAM og Garbage Collection Metrics under *Area*
+* Tråder under *State*
 
 ## Sjekk at det kommer data i CloudWatch
 
+Bruk Postman, Curl eller annen API klient til å gjøre operasjoner mot APIet. Sjekk i CloudWatch 
+at du får data. 
+
 ## Legg til  mer Metrics i  applikasjonen din med MicroMeter 
 
-Vi kan "finne opp" våre egne metrics og metadata-  og lage metrics også for businessrelaterte hendelser. 
-For eksempel akkumulere hvilke valutaer som er mest populære i tenkt scenario som vist her; (Pseudo-kode) 
+Les Spring Boot Micrometer dokumentasjonen, og se om du kan legge på en @Timed annotasjon for å måle
+hvor lang tid metoder tar https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#actuator.metrics.supported.timed-annotation
+
 
 
 ```java 

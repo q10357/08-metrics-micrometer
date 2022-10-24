@@ -18,6 +18,7 @@ import static java.math.BigDecimal.valueOf;
 import static java.util.Optional.ofNullable;
 
 @RestController
+@Timed
 public class BankAccountController implements ApplicationListener<ApplicationReadyEvent> {
 
     private Map<String, Account> theBank = new HashMap();
