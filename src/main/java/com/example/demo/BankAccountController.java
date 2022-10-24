@@ -18,7 +18,6 @@ import static java.math.BigDecimal.valueOf;
 import static java.util.Optional.ofNullable;
 
 @RestController
-@Timed
 public class BankAccountController implements ApplicationListener<ApplicationReadyEvent> {
 
     private Map<String, Account> theBank = new HashMap();
@@ -37,7 +36,6 @@ public class BankAccountController implements ApplicationListener<ApplicationRea
      * @param fromAccount from account id
      * @param toAccount   to account id
      */
-    @Timed
     @PostMapping(path = "/account/{fromAccount}/transfer/{toAccount}", consumes = "application/json", produces = "application/json")
     public void transfer(@RequestBody Transaction tx, @PathVariable String fromAccount, @PathVariable String toAccount) {
         // Increment a metric called "transfer" every time this is called, and tag with from- and to country
