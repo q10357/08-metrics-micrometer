@@ -1,7 +1,10 @@
 # Metrics med Spring Boot og CloudWatch 
 
-I denne øvingen skal dere bli kjent med hvordan man instrumenterer en Spring Boot applikasjon med Metrics. Vi skal bruke rammeverket 
+I denne øvingen skal dere *bli kjent med* hvordan man instrumenterer en Spring Boot applikasjon med Metrics. Vi skal bruke rammeverket 
 Micrometer som er integrert i Spring Boot. Vi skal også se på hvordan vi kan visualisere Metrics i AWS CloudWatch.
+
+Bruk tid på å legge til, fjerne eller endre på koden som lager metrics, og se hvordan dette påvirker dataene og verdiene 
+i CloudWatch. 
 
 Koden i dette repositoriet eksponerer et undepunkt på http://localhost:8080/account - følgende funksjonalitet 
 er implementert
@@ -72,9 +75,17 @@ Spring vil eksponere en god del metrics til CloudWatch automatisk, blant annet f
 Bruk Postman, Curl eller annen API klient til å gjøre operasjoner mot APIet. Sjekk i CloudWatch 
 at du får data. 
 
-## Legg til  mer Metrics i  applikasjonen din med MicroMeter 
+* Velg de metrikkene du vil se på en graf, ved å søke eller navigere. 
+* Velg fanan "Graphed metrics" - du får da dataene opp i graf form. 
+* Du må deretter velge riktig statistiske funksjon for metrikken basert på hva slags data det er. 
 
-Les Spring Boot Micrometer dokumentasjonen, og se om du kan legge på en @Timed annotasjon for å måle
+
+![Alt text](img/cloudwatch.png  "a title")
+
+## Legg til mer Metrics i applikasjonen din med MicroMeter 
+
+* Kan du lage et nytt endepunkt med ny funksjonalitet? 
+* Les Spring Boot Micrometer dokumentasjonen, og se om du kan legge på en @Timed annotasjon for å måle
 hvor lang tid metoder tar https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#actuator.metrics.supported.timed-annotation
 
 Oppgave;
@@ -82,13 +93,6 @@ Oppgave;
 - Prøv ulike typer metrikker (Distribution summary, Counter, Gauge, Timer etc) - Sjekk dokumentasjonen - 
 - Bruk gjerne følgende guide som inspirasjon https://www.baeldung.com/micrometer
 - Referanseimplementasjon; https://micrometer.io/docs/concepts
-
-## Bonusoppgave
-
-Installer last-test verktøyet K6 på maskinen din og kjør en liten load test mot applikasjonen. Fra ```k6/``` katalogen i dette repositoryet kan du kjøre kommandoen
-```shell
- k6 run --vus 10 --duration 30s simpleloadtest.js
-```
 
 Nyttig informasjon; 
 
