@@ -7,6 +7,8 @@ CloudWatch
 Koden i dette repositoriet eksponerer et undepunkt på http://localhost:8080/account - følgende funksjonalitet 
 er implementert
 
+NB. Transfer-endepunktet krever ikke at det eksisterer en konto fra før- men vil opprette både til- og fra
+konto hvis de ikke eksisterer.
 
 * Lage ny konto POST path = "/account
 * Info om konto GET path = "/account/{accountId}
@@ -36,19 +38,16 @@ AccessKeyID og SecretAccessKey blir gitt i klasserommet.
 
 ## Start Spring Boot appen
 
-Du må endre på klassen *MetricsConfig* og bruke ditt egent studentnavn istedet for glennbech i kodeblokken 
+Du må endre på klassen *MetricsConfig* og bruke ditt egent studentnavn istedet for *glennbech* i kodeblokken 
 
 ````java
  return new CloudWatchConfig() {
-            private Map<String, String> configuration = Map.of(
-                    "cloudwatch.namespace", "glennbech",
-                    "cloudwatch.step", Duration.ofSeconds(5).toString());
-
-            @Override
-            public String get(String key) {
-                return configuration.get(key);
-            }
-        };
+        private Map<String, String> configuration = Map.of(
+                "cloudwatch.namespace", "glennbech",
+                "cloudwatch.step", Duration.ofSeconds(5).toString());
+        
+        ....
+    };
 ````
 
 Start applikasjonen
