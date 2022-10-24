@@ -64,6 +64,8 @@ mvn spring-boot:run
 Spring Boot vil eksponere en god del metrics til CloudWatch automatisk, 
 blant annet fra JVM, Spring web mm. 
 
+![Alt text](img/cloudwatch.png  "a title")
+
 * Åpne AWS UI, og tjenesten CloudWatch. Velg "Metrics".
 * Søk på ditt eget studentnavn som "NameSpace"
 * Du vil se at du allerede har noe metrics registert hvis du har startet appen riktig 
@@ -80,7 +82,7 @@ at du får data.
 * Du må deretter velge riktig statistiske funksjon for metrikken basert på hva slags data det er. 
 
 
-![Alt text](img/cloudwatch.png  "a title")
+
 
 ## Legg til mer Metrics i applikasjonen din med MicroMeter 
 
