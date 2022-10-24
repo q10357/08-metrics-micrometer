@@ -1,4 +1,4 @@
-# Metrics med Spring Boot, CloudWatch 
+# Metrics med Spring Boot og CloudWatch 
 
 I denne øvingen skal dere bli kjent med hvordan man instrumenterer en Spring Boot applikasjon med Metrics. Vi skal bruke rammeverket 
 Micrometer som er integrert i Spring Boot. Vi skal også se på hvordan vi kan visualisere Metrics i AWS CloudWatch og 
