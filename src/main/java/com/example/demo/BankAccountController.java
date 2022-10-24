@@ -87,12 +87,18 @@ public class BankAccountController implements ApplicationListener<ApplicationRea
     }
 
 
+    /**
+     * Denne meter-typen "Gauge" rapporterer en verdi hver gang noen kaller "size" metoden på
+     * Verdisettet til HashMap
+     *
+     * @param applicationReadyEvent
+     */
     @Override
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
         Gauge.builder("account_count", theBank, b -> b.values().size()).register(meterRegistry);
     }
 
-    @ResponseStatus(code = HttpStatus.NOT_FOUND, reason = "video not found")
+    @ResponseStatus(code = HttpStatus.NOT_FOUND, reason = "account not found")
     public static class AccountNotFoundException extends RuntimeException {
     }
 }

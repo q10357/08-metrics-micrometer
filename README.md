@@ -1,12 +1,27 @@
 # Metrics med Spring Boot, CloudWatch og Grafana
 
 I denne øvingen skal dere bli kjent med hvordan man instrumenterer en Spring Boot applikasjon med Metrics. Vi skal bruke rammeverket 
-Micrometer som er integrert i Spring Boot. 
+Micrometer som er integrert i Spring Boot. Vi skal også se på hvordan vi kan visualisere Metrics i AWS CloudWatch og 
+CloudWatch
 
-Vi skal også se på Metrics i AWS CloudWatch, og hvordan vi kan bruke Grafana for visualisering 
+Koden i dette repositoriet eksponerer et undepunkt på http://localhost:8080/account - følgende funksjonalitet 
+er implementert
 
-Koden i dette repositoriet eksponerer et undepunkt på http://localhost:8080/account - se på koden hvordan payload
-strukturen er definert og HTTP metodene som brukes. Prøv APIet via Postman.
+
+* Lage ny konto POST path = "/account
+* Info om konto GET path = "/account/{accountId}
+* Oveføre penger POST path = "/account/{fromAccount}/transfer/{toAccount}
+
+Payload for overføringer , fromCountry og toCountry er valgfrie og default er "NO"
+
+```json
+{
+    "fromCountry" : "SE",
+    "toCountry" : "US",
+    "amount" : 500
+}
+```
+
 
 ## Start Spring Boot appen
 
@@ -14,14 +29,19 @@ strukturen er definert og HTTP metodene som brukes. Prøv APIet via Postman.
 mvn spring-boot:run
 ```
 
-* Spring vil levere en god del metrics til CliudWatch automatisk, blant annet fra JVM, Spring Boot Actutor, Spring web mm. 
-* Test grensesnittet i applikasjkonen med Postman
+Spring vil eksponere en god del metrics til CloudWatch automatisk, blant annet fra JVM, Spring Boot Actutor, Spring web mm. 
+Åpne CloudWatch velg "Metrics", Ditt eget NameSpace, og se at du har
+* 
+* metrics fra Spring boot Web under (exception, method, outcome, status, uri)
+* RAM og Garbage Collection Metrics under "Area"
+* Tråder under "State"
+
 * Gå til AWS CloudWatch og gå til "Metrics"
 * Søk på ditt eget studentnavn som NameSpace
 
 ## Sjekk at det kommer data i CloudWatch
 
-## Legg til mer Metrics i  applikasjonen din med MicroMeter 
+## Legg til  mer Metrics i  applikasjonen din med MicroMeter 
 
 Vi kan "finne opp" våre egne metrics og metadata-  og lage metrics også for businessrelaterte hendelser. 
 For eksempel akkumulere hvilke valutaer som er mest populære i tenkt scenario som vist her; (Pseudo-kode) 
