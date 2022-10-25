@@ -61,6 +61,7 @@ mvn spring-boot:run
 ```
 
 ## Sjekk at det kommer data i CloudWatch
+
 Spring Boot vil eksponere en god del metrics til CloudWatch automatisk, 
 blant annet fra JVM, Spring web mm. 
 
@@ -82,19 +83,15 @@ at du får data.
 * Du må deretter velge riktig statistiske funksjon for metrikken basert på hva slags data det er. 
 
 
-
-
 ## Legg til mer Metrics i applikasjonen din med MicroMeter 
 
 * Kan du lage et nytt endepunkt med ny funksjonalitet? 
-* Les Spring Boot Micrometer dokumentasjonen, og se om du kan legge på en @Timed annotasjon for å måle
-hvor lang tid metoder tar https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#actuator.metrics.supported.timed-annotation
-
-Oppgave;
-
-- Prøv ulike typer metrikker (Distribution summary, Counter, Gauge, Timer etc) - Sjekk dokumentasjonen - 
-- Bruk gjerne følgende guide som inspirasjon https://www.baeldung.com/micrometer
-- Referanseimplementasjon; https://micrometer.io/docs/concepts
+* Legg på en ekstra Tag for en eksisterende Metric. Hva skjer?  
+* Les Spring Boot Micrometer dokumentasjonen, og se om du kan legge på en @Timed annotasjon for å måle hvor lang tid metoder tar https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#actuator.metrics.supported.timed-annotation
+* Sjekk ut Micrometer sin "LongTaskTimer" funksjonalitet
+* Prøv ulike typer metrikker (Distribution summary, Counter, Gauge, Timer etc) - Sjekk dokumentasjonen - 
+* Bruk gjerne følgende guide som inspirasjon https://www.baeldung.com/micrometer
+* Referanseimplementasjon; https://micrometer.io/docs/concepts
 
 Nyttig informasjon; 
 
